@@ -110,7 +110,7 @@ def process_stats(results):
                 stats = [first_stat, last_stat]
 
             last_stat = stats[-1]
-            formatted_value = "{:,}".format(last_stat['value'])
+            formatted_value = "{:,}".format(last_stat['value'] if last_stat['value'] else 0)
 
             paths.append({
                 '_id': path,
