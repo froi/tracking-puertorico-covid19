@@ -56,18 +56,18 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table">
+          <table class="table table-fixed">
             <thead>
               <tr>
-                <th scope="col">Date</th>
-                <th scope="col">Value</th>
+                <th class="col-sm-2 col-md-6">Date</th>
+                <th class="col-sm-2 col-md-6">Value</th>
               </tr>
             </thead>
             <tbody>
               {% for stat in stat.data %}
               <tr>
-                <td>{{ stat.date.strftime('%Y-%m-%d %I%p') }}</td>
-                <td>{{ stat.value }}</td>
+                <td class="col-sm-2 col-md-6">{{ stat.date.strftime('%Y-%m-%d %I%p') }}</td>
+                <td class="col-sm-2 col-md-6">{{ stat.value }}</td>
               </tr>
               {% endfor %}
             </tbody>
