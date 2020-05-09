@@ -11,6 +11,14 @@ from flask import (Flask, Response, request, redirect, jsonify,
 
 from .utils import JSONEncoder, Echo
 
+try:
+    import dotenv
+    dotenv.load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+except ModuleNotFoundError:
+    # python-dotenv will not be installed in a production env.
+    # This error is expected and is not to be printed to stderr
+    pass
+
 pr = timezone('America/Puerto_Rico')
 utc = timezone('UTC')
 
