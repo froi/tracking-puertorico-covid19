@@ -4,6 +4,7 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+black = "*"
 python-dotenv = "*"
 
 [packages]
@@ -13,8 +14,10 @@ gunicorn = "*"
 flask = "*"
 pytz = "*"
 pillow = "*"
-python-dotenv = "*"
 scrapy = "*"
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
