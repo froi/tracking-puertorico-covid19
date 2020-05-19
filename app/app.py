@@ -168,27 +168,55 @@ def stat_details(stat):
 @app.route('/stats/<stat>.json')
 def stats_json(stat):
     data = []
-    stats = db.stats.find({'path': stat}).sort('created_at')
+    query = {}
 
-    for stat in stats:
-        data.append({'date': stat['created_at'], 'value': stat['value']})
+    if stat != 'all':
+        query = {'path': stat}
+
+    stats = db.stats.find(query).sort('created_at')
+
+    for doc in stats:
+        row = {
+            'date': doc['created_at'], 
+            'value': doc['value']
+        }
+
+        if stat == 'all':
+            row['stat'] = doc['label']
+
+        data.append(row)
 
     return jsonify(data)
 
 
 @app.route('/stats/<stat>.csv')
 def stats_csv(stat):
-    writer = csv.DictWriter(Echo(), fieldnames=['date', 'value'])
-    writer.writeheader()
+    fields = ['date', 'value']
+
+    if stat == 'all':
+        fields = ['stat'] + fields
+
+    writer = csv.DictWriter(Echo(), fieldnames=fields)
 
     def generate(stat):
-        stats = db.stats.find({'path': stat}).sort('created_at')
+        query = {}
 
-        for stat in stats:
-            yield writer.writerow({
-                'date': stat['created_at'],
-                'value': stat['value']
-            })
+        yield writer.writeheader()
+
+        if stat != 'all':
+            query = {'path': stat}
+        stats = db.stats.find(query).sort('created_at')
+
+        for doc in stats:
+            row = {
+                'date': doc['created_at'],
+                'value': doc['value']
+            }
+
+            if stat == 'all':
+                row['stat'] = doc['label']
+
+            yield writer.writerow(row)
 
     return Response(generate(stat), mimetype='text/csv')
 
