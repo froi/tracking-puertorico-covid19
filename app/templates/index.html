@@ -32,12 +32,18 @@
               </h4>
               <div class="card-body">
                 <div class="row">
+                  {% if stat.show_graph %}
                   <div class="col">
                     <div id="chart-{{ stat.slug }}" class="chart"></div>
                   </div>
                   <div class="col-sm-12 col-md-5 align-self-center">
                     <h1 class="display-3 last-value">{{ stat.last_value }}</h1>
                   </div>
+                  {% else %}
+                  <div class="col-sm-12 col-md-12 align-self-center">
+                    <h1 class="display-3 last-value">{{ stat.last_value }}</h1>
+                  </div>
+                  {% endif %}
                 </div>
                 <a target="_blank" href="{{ url_for('stats_json', stat=stat._id) }}" class="card-link">JSON</a>
                 <a target="_blank" href="{{ url_for('stats_csv', stat=stat._id) }}" class="card-link">CSV</a>

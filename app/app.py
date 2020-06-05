@@ -58,7 +58,9 @@ def get_stats(path=None):
 
 def process_stats(results):
     paths = []
-
+    NO_GRAPH_STATS = [
+        'fecha_rd'
+    ]
     for result in results:
         path = result['_id']
         label = result['label']
@@ -110,7 +112,10 @@ def process_stats(results):
                 stats = [first_stat, last_stat]
 
             last_stat = stats[-1]
-            formatted_value = "{:,}".format(last_stat['value'] if last_stat['value'] else 0)
+            if path != "fecha_rd":
+                value = "{:,}".format(last_stat['value'] if last_stat['value'] else 0)
+            else:
+                value = last_stat['value']
 
             paths.append({
                 '_id': path,
@@ -118,7 +123,8 @@ def process_stats(results):
                 'label': label,
                 'data': data,
                 'graph_data': stats,
-                'last_value': formatted_value
+                'last_value': value,
+                'show_graph': True if path not in NO_GRAPH_STATS else False,
             })
 
     return paths
@@ -177,7 +183,7 @@ def stats_json(stat):
 
     for doc in stats:
         row = {
-            'date': doc['created_at'], 
+            'date': doc['created_at'],
             'value': doc['value']
         }
 
