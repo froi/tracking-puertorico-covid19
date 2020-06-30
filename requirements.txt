@@ -31,7 +31,7 @@ pyopenssl==19.1.0
 python-dotenv==0.13.0
 pytz==2020.1
 queuelib==1.5.0
-requests==2.23.0
+requests==2.24.0
 scrapy==2.2.0
 service-identity==18.1.0
 six==1.15.0
